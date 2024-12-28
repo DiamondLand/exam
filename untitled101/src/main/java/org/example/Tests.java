@@ -3,71 +3,30 @@ package org.example;
 public class Tests {
 
     public static void main(String[] args) {
-        testCountDigits();
+        runTest("", 0);
+        runTest("Hello World", 0);
+        runTest("abc123", 3);
+        runTest("!@#123$%", 3);
+        runTest("12345", 5);
+        runTest(null, -1);
+        runTest("123abc456", 6);
+        runTest("!@#$%^&*", 0);
     }
 
-    public static void testCountDigits() {
-        int result = App.countDigits("");
-        if (result == 0) {
-            System.out.println("testCountDigits_EmptyString passed");
-            System.out.println(result);
-        } else {
-            System.out.println("Test failed: expected 0, but got " + result);
-        }
-
-        result = App.countDigits("Hello World");
-        if (result == 0) {
-            System.out.println("testCountDigits_NoDigits passed");
-            System.out.println(result);
-        } else {
-            System.out.println("Test failed: expected 0, but got " + result);
-        }
-
-        result = App.countDigits("abc123");
-        if (result == 3) {
-            System.out.println("testCountDigits_WithDigits passed");
-            System.out.println(result);
-        } else {
-            System.out.println("Test failed: expected 3, but got " + result);
-        }
-
-        result = App.countDigits("!@#123$%");
-        if (result == 3) {
-            System.out.println("testCountDigits_WithSpecialCharacters passed");
-            System.out.println(result);
-        } else {
-            System.out.println("Test failed: expected 3, but got " + result);
-        }
-
-        result = App.countDigits("12345");
-        if (result == 5) {
-            System.out.println("testCountDigits_AllDigits passed");
-            System.out.println(result);
-        } else {
-            System.out.println("Test failed: expected 5, but got " + result);
-        }
-
+    public static void runTest(String input, int expected) {
         try {
-            result = App.countDigits(null);
-            System.out.println("Test failed: expected exception for null input, but got " + result);
+            int result = App.countDigits(input);
+            if (result == expected) {
+                System.out.println("Test passed: input = \"" + input + "\", expected = " + expected + ", got = " + result);
+            } else {
+                System.out.println("Test failed: input = \"" + input + "\", expected = " + expected + ", but got " + result);
+            }
         } catch (NullPointerException e) {
-            System.out.println("testCountDigits_NullInput passed (caught expected NullPointerException)");
-        }
-
-        result = App.countDigits("123abc456");
-        if (result == 6) {
-            System.out.println("testCountDigits_MixedCharacters passed");
-            System.out.println(result);
-        } else {
-            System.out.println("Test failed: expected 6, but got " + result);
-        }
-
-        result = App.countDigits("!@#$%^&*()");
-        if (result == 0) {
-            System.out.println("testCountDigits_NoDigitsInSpecialCharacters passed");
-            System.out.println(result);
-        } else {
-            System.out.println("Test failed: expected 0, but got " + result);
+            if (expected == -1) {
+                System.out.println("Test passed: input = null, expected exception caught");
+            } else {
+                System.out.println("Test failed: unexpected exception for null input");
+            }
         }
     }
 }
